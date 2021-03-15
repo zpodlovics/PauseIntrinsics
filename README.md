@@ -1,7 +1,7 @@
-(Inspired by https://github.com/giltene/GilExamples/tree/master/SpinWaitTest)
 (See draft Sse2.Pause() here: [https://github.com/zpodlovics/pauseintrinsics/blob/main/ApiDraft.md])
+(Inspired by https://github.com/giltene/GilExamples/tree/master/SpinWaitTest)
 
-#Pause Intrinsics
+# Pause Intrinsics
 
 A simple thread-to-thread communication latency test that measures and reports on the
 behavior of thread-to-thread ping-pong latencies when spinning using a shared volatile
@@ -15,10 +15,13 @@ platform, if the latency of measuring time with Stopwatch.GetTimestamp() is disc
 (nanoTime latency can be separtely estimated across the percentile spectrum using
 the PauseIntrinsics.GetTimestamp.Benchmark.Cli test in this project).
 
-###Example results plot (two threads on a shared core on a Xeon E5-2660v1): 
-![onspinwait_result] 
+### Example .NET results plot (two threads on a shared core on a Xeon E5-2660v1): 
+![thread_spinwait_result] 
 
-###Running:
+### Example Java results plot (two threads on a shared core on a Xeon E5-2697v2): 
+![runtime_onspinwait_result] 
+
+### Running:
 
 This test is obviously intended to be run on machines with 2 or more vcores (tests on single vcore machines will
 produce understandably outrageously long runtimes).
@@ -62,24 +65,24 @@ cores 0 and 1 represent two hyper-threads on a common core. You will want to ide
 system. You can use lstopo or hwloc linux tools to identify the machine pairs.). You can also improve the measurement
 to execute it with high(er) priority eg.:
 
-% nice -20 taskset -c 0,1 dotnet tests/PauseIntrinsics.Pause.Benchmark.Cli/bin/Release/net5.0/PauseIntrinsics.Pause.Benchmark.Cli.dll > Pause.hgrm
+    % nice -20 taskset -c 0,1 dotnet tests/PauseIntrinsics.Pause.Benchmark.Cli/bin/Release/net5.0/PauseIntrinsics.Pause.Benchmark.Cli.dll > Pause.hgrm
  
-###Plotting results:
+### Plotting results:
  
 SpinHintTrst outputs a percentile histogram distribution in [HdrHistogram](http://hdrhistogram.org)'s common
 .hgrm format. This output can/shuld be redirected to an .hgrm file (e.g. vanilla.hgrm),
 which can then be directly plotted using tools like [HdrHistogram's online percentile plotter] (http://hdrhistogram.github.io/HdrHistogram/plotFiles.html)
 
  
-###Prototype intrinsics implementations
+### Prototype intrinsics implementations
 
 A prototype .NET implementation that implements Sse2.Pause as a PAUSE instruction on x86-64 is available. 
 
 Relevant repository could be found here: 
 - Runtime: [https://github.com/zpodlovics/runtime/tree/sse2pause]  
 
-    Note: These full implementations are included for x86. Implementations on
-    other platforms may choose to use the same instructions as [linux cpu_relax](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/arch/x86/um/asm/processor.h?h=v5.10.23#n30) and/or [plasma_spin](https://github.com/gstrauss/plasma/blob/master/plasma_spin.h)
+    Note: These full implementations are included for x86. Implementations on other platforms may choose to 
+    use the same instructions as [linux cpu_relax](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/arch/x86/um/asm/processor.h?h=v5.10.23#n30) and/or [plasma_spin](https://github.com/gstrauss/plasma/blob/master/plasma_spin.h)
 
 A downloadable working .NET SDK is work in progress.
 

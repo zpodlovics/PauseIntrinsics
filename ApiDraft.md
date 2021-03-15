@@ -2,24 +2,24 @@
 
 # .NET API Intrinsics Pause
 
-##Summary
+## Summary
 
 Add an Intrinsics API that would allow .NET code to indicate that a spin wait loop is being 
 executed.
 
-##Goals
+## Goals
 
 Provide an Intrinsics API that would allow .NET code to indicate to the runtime that it is in
 a spin wait loop.
 
-##Non-Goals
+## Non-Goals
 
 It is NOT a goal to look at performance intrinsics beyond spin wait loops. Other performance 
 related intrinsics are outside the scope of this proposal. Architecture neutral (eg.: 
 Thread.SpinWait()). or normalized spin wait loopsare also outside of the scope of this 
 proposal (eg.: YieldProcessorNormalized / OptimalMaxSpinWaitsPerSpinIteration).
 
-##Motivation
+## Motivation
 
 Some hardware platforms benefit from software indication that a spin wait loop is in progress.
 Some common execution benefits may be observed:
@@ -70,12 +70,12 @@ measure time.
 
 ![example results]
 
-##Description
+## Description
 
 I would like to propose to add a method to the .NET Sse2 Intrinsics which would indicate to 
 the runtime that a spin loop is being performed: e.g. Sse2.Pause().
 
-##Alternatives
+## Alternatives
 
 DllImport can be used to spin loop with a spin-loop-hinting CPU instruction, but the
 DllImport-boundary crossing overhead tends to be larger than the benefit provided by
@@ -88,14 +88,14 @@ automatically and reliably detecting spinning situations, coupled with questions
 about potential tradeoffs in using the hints on some platform to delay the availability 
 of viable implementations significantly.
 
-##Testing
+## Testing
 
-I believe that given the vey small footprint of Sse2.Pause() Intrinsics API, testing 
-of an intrinsified x86 implementation in .NET will also be straightforward. I expect
-testing to focus on confirming both the code generation correctness and latency
+It seems that given the very small footprint of Sse2.Pause() Intrinsics API, testing 
+of an intrinsified x86 implementation in .NET will also be straightforward. I would 
+expect testing to focus on confirming both the code generation correctness and latency
 benefits of using an intrinsic implementation of Sse2.Pause().
 
-##Risks and Assumptions
+## Risks and Assumptions
 
 An intrinsic x86 implementation will involve modifications to multiple .NET components and
 exposing a new Sse2.Pause Intrinsics API and as such they carry some risks, but no more 
@@ -107,6 +107,4 @@ than other simple intrinsics added to the .NET.
 [4] Chart depicting onSpinWait() intrinsification impact [https://github.com/giltene/GilExamples/blob/master/SpinWaitTest/SpinLoopLatency_E5-2697v2_sharedCore.png]    
 [5] .NET prototype Sse2.Pause intrinsics implementation [https://github.com/zpodlovics/runtime/tree/sse2pause]
 [6] Implementations on other platforms (other than x86) may choose to use the same instructions as [linux cpu_relax](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/arch/x86/um/asm/processor.h?h=v5.10.23#n30) and/or [plasma_spin](https://github.com/gstrauss/plasma/blob/master/plasma_spin.h)
-
-https://libredd.it/r/intel/comments/hogk2n/research_on_the_impact_of_intel_pause_instruction/
-https://software.intel.com/content/www/us/en/develop/articles/benefitting-power-and-performance-sleep-loops.html
+[7] https://software.intel.com/content/www/us/en/develop/articles/benefitting-power-and-performance-sleep-loops.html
