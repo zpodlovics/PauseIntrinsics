@@ -23,8 +23,8 @@ the PauseIntrinsics.GetTimestamp.Benchmark.Cli test in this project).
 
 ### Running:
 
-This test is obviously intended to be run on machines with 2 or more vcores (tests on single vcore machines will
-produce understandably outrageously long runtimes).
+This test is obviously intended to be run on machines with 2 or more vcores (tests on single vcore 
+machines will produce understandably outrageously long runtimes).
  
 (If needed) Prepare the PauseIntrinsics.sln by running (.NET SDK 5.x Required):
  
@@ -34,7 +34,8 @@ The simplest way to run SpinWait benchmark is:
 
     % dotnet tests/PauseIntrinsics.SpinWait.Benchmark.Cli/bin/Release/net5.0/PauseIntrinsics.SpinWait.Benchmark.Cli.dll
 
-The simplest way to run MemoryFence / Pause (assuming HAVE_PAUSE_INTRINSICS is defined for build.sh) benchmark is:
+The simplest way to run MemoryFence / Pause (assuming HAVE_PAUSE_INTRINSICS is defined for build.sh) 
+benchmark is:
 
     % dotnet tests/PauseIntrinsics.Pause.Benchmark.Cli/bin/Release/net5.0/PauseIntrinsics.Pause.Benchmark.Cli.dll
 
@@ -42,8 +43,8 @@ The simplest way to run BenchmarkDotNet benchmark for the various waiting method
 
     % dotnet tests/PauseIntrinsics.BenchmarkDotnet.Cli/bin/Release/net5.0/PauseIntrinsics.BenchmarkDotnet.Cli.dll -f "*" -m -d
 
-Since the test is intended to highlight the benefits of an intrinsic Sse2.Pause, using a prototype .NET that that intrinsifies 
-Sse2.Pause() a PAUSE instruction, you can compare the output of:
+Since the test is intended to highlight the benefits of an intrinsic Sse2.Pause, using a prototype 
+.NET that that intrinsifies Sse2.Pause() a PAUSE instruction, you can compare the output of:
 
     % dotnet tests/PauseIntrinsics.Pause.Benchmark.Cli/bin/Release/net5.0/PauseIntrinsics.Pause.Benchmark.Cli.dll > Pause.hgrm
 
@@ -51,27 +52,31 @@ and
     
     % dotnet tests/PauseIntrinsics.SpinWait.Benchmark.Cli/bin/Release/net5.0/PauseIntrinsics.SpinWait.Benchmark.Cli.dll > SpinWait.hgrm
 
-By plotting them both with [HdrHistogram's online percentile plotter] (http://hdrhistogram.github.io/HdrHistogram/plotFiles.html)
+By plotting them both with [HdrHistogram's online percentile plotter] 
+(http://hdrhistogram.github.io/HdrHistogram/plotFiles.html)
 
-On moden x86-64 sockets, comparisions seem to show an 18-20nsec difference in the round trip latency.  
+On moden x86-64 sockets, comparisions seem to show an 18-20nsec difference in the round trip 
+latency. 
 
-For consistent measurement, it is recommended that this test be executed while binding the process to specific cores. 
-E.g. on a Linux system, the following command can be used:
+For consistent measurement, it is recommended that this test be executed while binding the 
+process to specific cores.  E.g. on a Linux system, the following command can be used:
 
     % taskset -c 0,1 dotnet tests/PauseIntrinsics.Pause.Benchmark.Cli/bin/Release/net5.0/PauseIntrinsics.Pause.Benchmark.Cli.dll > Pause.hgrm
     
-To place the spinning threads on the same core. (the choice of cores 0 and 1 is specific to a 48 vcore system where 
-cores 0 and 1 represent two hyper-threads on a common core. You will want to identify a matching pair on your specific 
-system. You can use lstopo or hwloc linux tools to identify the machine pairs.). You can also improve the measurement
-to execute it with high(er) priority eg.:
+To place the spinning threads on the same core. (the choice of cores 0 and 1 is specific to a 32 
+vcore system where cores 0 and 1 represent two hyper-threads on a common core. You will want to 
+identify a matching pair on your specific system. You can use lstopo or hwloc linux tools to 
+identify the machine pairs.). You can also improve the measurement to execute it with high(er) 
+priority eg.:
 
     % nice -20 taskset -c 0,1 dotnet tests/PauseIntrinsics.Pause.Benchmark.Cli/bin/Release/net5.0/PauseIntrinsics.Pause.Benchmark.Cli.dll > Pause.hgrm
  
 ### Plotting results:
  
-SpinHintTrst outputs a percentile histogram distribution in [HdrHistogram](http://hdrhistogram.org)'s common
-.hgrm format. This output can/shuld be redirected to an .hgrm file (e.g. vanilla.hgrm),
-which can then be directly plotted using tools like [HdrHistogram's online percentile plotter] (http://hdrhistogram.github.io/HdrHistogram/plotFiles.html)
+SpinHintTrst outputs a percentile histogram distribution in [HdrHistogram](http://hdrhistogram.org)'s 
+common.hgrm format. This output can/shuld be redirected to an .hgrm file (e.g. SpinWait.hgrm), which 
+can then be directly plotted using tools like [HdrHistogram's online percentile plotter] 
+(http://hdrhistogram.github.io/HdrHistogram/plotFiles.html)
 
  
 ### Prototype intrinsics implementations
@@ -103,8 +108,8 @@ To test pause pure ping pong throughput test with no latency measurement overhea
 
     % dotnet tests/PauseIntrinsics.Pause.Throughput.Benchmark.Cli/bin/Release/net5.0/PauseIntrinsics.Pause.Throughput.Benchmark.Cli.dll
 
-To document the latency of measure time with Stopwatch.GetTimestamp() (so that it can be discounted when 
-observing ping pong latecies in the latency measuring tests):
+To document the latency of measure time with Stopwatch.GetTimestamp() (so that it can be discounted 
+when  observing ping pong latecies in the latency measuring tests):
 
     % dotnet tests/PauseIntrinsics.GetTimestamp.Benchmark.Cli/bin/Release/net5.0/PauseIntrinsics.GetTimestamp.Benchmark.Cli.dll
 
