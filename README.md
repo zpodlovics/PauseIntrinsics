@@ -18,7 +18,7 @@ the PauseIntrinsics.GetTimestamp.Benchmark.Cli test in this project).
 ### Example .NET results plot (two threads on a shared core on a Xeon E5-2660v1): 
 ![thread_spinwait_result] 
 
-### Example Java results plot (two threads on a shared core on a Xeon E5-2697v2): 
+### Example Java results plot from [1] (two threads on a shared core on a Xeon E5-2697v2): 
 ![runtime_onspinwait_result] 
 
 ### Running:
@@ -112,6 +112,8 @@ To document the latency of measure time with Stopwatch.GetTimestamp() (so that i
 when  observing ping pong latecies in the latency measuring tests):
 
     % dotnet tests/PauseIntrinsics.GetTimestamp.Benchmark.Cli/bin/Release/net5.0/PauseIntrinsics.GetTimestamp.Benchmark.Cli.dll
+
+[1] [https://github.com/giltene/GilExamples/tree/master/SpinWaitTest]
 
 [thread_spinwait_result]:https://raw.github.com/zpodlovics/pauseintrinsics/main/measurements/SpinWait_Histogram.png "Example Thread.SpinWait(1) Results on E5-2660v1"
 
