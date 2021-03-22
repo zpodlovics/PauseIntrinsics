@@ -110,5 +110,5 @@ than other simple intrinsics added to the .NET.
 [8] https://uops.info/paper.html
 [9] https://uops.info/table.html?search=PAUSE&cb_lat=on&cb_tp=on&cb_uops=on&cb_ports=on&cb_SNB=on&cb_IVB=on&cb_HSW=on&cb_BDW=on&cb_SKL=on&cb_SKX=on&cb_KBL=on&cb_CFL=on&cb_CNL=on&cb_CLX=on&cb_ICL=on&cb_ZENp=on&cb_ZEN2=on&cb_measurements=on&cb_iaca30=on&cb_doc=on&cb_base=on&cb_sse=on&cb_others=on
 
-[thread_spinwait_result]:https://raw.github.com/zpodlovics/pauseintrinsics/main/measurements/SpinWait_Histogram.png "Example Thread.SpinWait(1) Results on E5-2660v1"
+[thread_spinwait_result]:https://raw.github.com/zpodlovics/pauseintrinsics/main/measurements/SandyBridge_Latency.png "Example Thread.SpinWait(1) Results on E5-2660v1"
 [runtime_onspinwait_result]:https://raw.github.com/giltene/GilExamples/master/SpinWaitTest/SpinLoopLatency_E5-2697v2_sharedCore.png "Example Runtime.onSpinWait() Results on E5-2697v2"
