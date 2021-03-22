@@ -28,10 +28,15 @@ the PauseIntrinsics.GetTimestamp.Benchmark.Cli test in this project).
 
 ### Running:
 
+A non-official, non-validated, non-compatible proof of concept .NET SDK will be available for benchmarking 
+the pause intrinsics in source (spec and patch file for CentOS8 dotnet5 package) form. WARNING: due the 
+fixed public api surface an existing api call (Sse2.MemoryFence()) will emit PAUSE instruction instead of 
+the MFENCE instruction.
+
 This test is obviously intended to be run on machines with 2 or more vcores (tests on single 
 vcore machines will produce understandably outrageously long runtimes).
  
-(If needed) Prepare the PauseIntrinsics.sln by running (.NET SDK 5.x Required):
+(If needed) Prepare the PauseIntrinsics.sln by running (.NET SDK 5.x required):
  
     % ./publish.sh
 
@@ -44,7 +49,8 @@ benchmark is:
 
     % ./artifacts/PauseIntrinsics.Pause.Benchmark.Cli/PauseIntrinsics.Pause.Benchmark.Cli
 
-The simplest way to run BenchmarkDotNet benchmark for the various waiting methods is (.NET SDK 5.x required):
+The simplest way to run BenchmarkDotNet benchmark for the various waiting methods is (.NET SDK 5.x 
+prototype required for pause intrinsics):
 
     % ./artifacts/PauseIntrinsics.BenchmarkDotnet.Cli/PauseIntrinsics.BenchmarkDotnet.Cli -f "*" -m -d
 
