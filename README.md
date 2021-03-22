@@ -17,7 +17,11 @@ platform, if the latency of measuring time with Stopwatch.GetTimestamp() is disc
 the PauseIntrinsics.GetTimestamp.Benchmark.Cli test in this project).
 
 ### Example .NET results plot (two threads on a shared core on a Xeon E5-2660v1 with SMT disabled and using all spectre / meltdown / related mitigations enabled by default):
-![thread_spinwait_result] 
+![thread_spinwait_sandybridge_result] 
+
+### Example .NET results plot (two threads on a shared core on a Kaveri 7850K using all spectre / meltdown / related mitigations enabled by default):
+![thread_spinwait_kaveri_result] 
+
 
 ### Example Java results plot from [1] (two threads on a shared core on a Xeon E5-2697v2): 
 ![runtime_onspinwait_result] 
@@ -150,6 +154,8 @@ when  observing ping pong latencies in the latency measuring tests):
 
 [1] [https://github.com/giltene/GilExamples/tree/master/SpinWaitTest]
 
-[thread_spinwait_result]:https://raw.github.com/zpodlovics/pauseintrinsics/main/measurements/SandyBridge_Latency.png "Example Thread.SpinWait(1) Results on E5-2660v1"
+[thread_spinwait_sandybridge_result]:https://raw.github.com/zpodlovics/pauseintrinsics/main/measurements/SandyBridge_Latency.png "Example Thread.SpinWait(1) Results on E5-2660v1"
+
+[thread_spinwait_kaveri_result]:https://raw.github.com/zpodlovics/pauseintrinsics/main/measurements/Kaveri_Latency.png "Example Thread.SpinWait(1) Results on Kaveri 7850K"
 
 [runtime_onspinwait_result]:https://raw.github.com/giltene/GilExamples/master/SpinWaitTest/SpinLoopLatency_E5-2697v2_sharedCore.png "Example Runtime.onSpinWait() Results on E5-2697v2"
