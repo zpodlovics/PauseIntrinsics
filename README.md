@@ -16,7 +16,7 @@ platform, if the latency of measuring time with Stopwatch.GetTimestamp() is disc
 (nanoTime latency can be separately estimated across the percentile spectrum using
 the PauseIntrinsics.GetTimestamp.Benchmark.Cli test in this project).
 
-### Example .NET results plot (two threads on a shared core on a Xeon E5-2660v1 [2]):
+### Example .NET results plot (two threads on a shared core on a Xeon E5-2660v1 with SMT disabled and using all spectre / meltdown / related mitigations enabled by default):
 ![thread_spinwait_result] 
 
 ### Example Java results plot from [1] (two threads on a shared core on a Xeon E5-2697v2): 
@@ -149,7 +149,6 @@ when  observing ping pong latencies in the latency measuring tests):
     % ./artifacts/PauseIntrinsics.GetTimestamp.Benchmark.Cli/PauseIntrinsics.GetTimestamp.Benchmark.Cli
 
 [1] [https://github.com/giltene/GilExamples/tree/master/SpinWaitTest]
-[2] Using CentOS8 4.18.0-240.15.1.el8_3.x86_64 with SMT disabled and using all spectre / meltdown / related mitigations enabled by default.
 
 [thread_spinwait_result]:https://raw.github.com/zpodlovics/pauseintrinsics/main/measurements/SandyBridge_Latency.png "Example Thread.SpinWait(1) Results on E5-2660v1"
 
