@@ -66,12 +66,10 @@ Assembly:
 
 ```
 ## .NET Core 5.0.2 (CoreCLR 5.0.220.62901, CoreFX 5.0.220.62901), X64 RyuJIT
-```assembly
 ; PauseIntrinsics.BenchmarkDotNet.Cli.Benchmark.MemoryFence()
        pause
        ret
 ; Total bytes of code 3
-```
 ```
 
 Since the test is intended to highlight the benefits of an intrinsic Sse2.Pause, using a prototype 
