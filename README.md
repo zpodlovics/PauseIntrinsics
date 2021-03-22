@@ -44,6 +44,36 @@ The simplest way to run BenchmarkDotNet benchmark for the various waiting method
 
     % ./artifacts/PauseIntrinsics.BenchmarkDotnet.Cli/PauseIntrinsics.BenchmarkDotnet.Cli -f "*" -m -d
 
+Output:    
+
+```
+BenchmarkDotNet=v0.12.1, OS=centos 8
+AMD A10-7850K Radeon R7, 12 Compute Cores 4C+8G, 1 CPU, 4 logical and 2 physical cores
+.NET Core SDK=5.0.102
+  [Host]     : .NET Core 5.0 (CoreCLR 5.0.220.61120, CoreFX 5.0.220.61120), X64 RyuJIT
+  DefaultJob : .NET Core 5.0.2 (CoreCLR 5.0.220.62901, CoreFX 5.0.220.62901), X64 RyuJIT
+
+
+|       Method |      Mean |     Error |    StdDev | Gen 0 | Gen 1 | Gen 2 | Allocated | Code Size |
+|------------- |----------:|----------:|----------:|------:|------:|------:|----------:|----------:|
+|     BusySpin |  1.311 ns | 0.0542 ns | 0.0507 ns |     - |     - |     - |         - |       6 B |
+| GetTimestamp | 50.397 ns | 1.0498 ns | 1.2893 ns |     - |     - |     - |         - |      33 B |
+|    SpinWait1 | 42.325 ns | 0.7664 ns | 0.7169 ns |     - |     - |     - |         - |      10 B |
+|  MemoryFence |  1.177 ns | 0.0518 ns | 0.0484 ns |     - |     - |     - |         - |       3 B |
+```
+
+Assembly:
+
+```
+## .NET Core 5.0.2 (CoreCLR 5.0.220.62901, CoreFX 5.0.220.62901), X64 RyuJIT
+```assembly
+; PauseIntrinsics.BenchmarkDotNet.Cli.Benchmark.MemoryFence()
+       pause
+       ret
+; Total bytes of code 3
+```
+```
+
 Since the test is intended to highlight the benefits of an intrinsic Sse2.Pause, using a prototype 
 .NET that that intrinsifies Sse2.Pause() a PAUSE instruction, you can compare the output of:
 
